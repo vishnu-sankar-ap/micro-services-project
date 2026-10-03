@@ -1,0 +1,26 @@
+userService:
+  replicaCount: 2
+
+  image:
+    repository: 805909320592.dkr.ecr.eu-north-1.amazonaws.com/user-service
+    tag: latest
+
+  port: 3001
+
+productService:
+  replicaCount: 2
+
+  image:
+    repository: 805909320592.dkr.ecr.eu-north-1.amazonaws.com/product-service
+    tag: latest
+
+  port: 3002
+
+orderService:
+  replicaCount: 2
+
+  image:
+    repository: 805909320592.dkr.ecr.eu-north-1.amazonaws.com/order-service
+    tag: latest
+
+  port: 3003

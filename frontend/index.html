@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cloud Arcade</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        ☁️ <span>Cloud Arcade</span>
+    </div>
+
+    <nav>
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="showPage('reaction')">Reaction Rush</button>
+        <button onclick="showPage('memory')">Memory Match</button>
+        <button onclick="showPage('snake')">Snake</button>
+    </nav>
+
+</header>
+
+
+<main>
+
+    <!-- HOME -->
+
+    <section id="home" class="page active">
+
+        <div class="hero">
+
+            <div class="hero-content">
+
+                <p class="eyebrow">☁️ POWERED BY AWS EKS</p>
+
+                <h1>Welcome to<br><span>Cloud Arcade</span></h1>
+
+                <p class="hero-text">
+                    A cloud-powered gaming platform running on
+                    Kubernetes, containers and AWS.
+                </p>
+
+                <button class="primary-btn" onclick="showPage('reaction')">
+                    PLAY NOW →
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <section class="games-section">
+
+            <div class="section-title">
+                <p>CHOOSE YOUR CHALLENGE</p>
+                <h2>Three games. One arcade.</h2>
+            </div>
+
+
+            <div class="game-grid">
+
+                <div class="game-card reaction-card">
+
+                    <div class="game-icon">⚡</div>
+
+                    <h3>Reaction Rush</h3>
+
+                    <p>
+                        Test your reflexes. Wait for the signal
+                        and click as fast as you can.
+                    </p>
+
+                    <div class="game-meta">
+                        <span>⚡ Reflex</span>
+                        <span>🎯 1 Player</span>
+                    </div>
+
+                    <button onclick="showPage('reaction')">
+                        PLAY GAME
+                    </button>
+
+                </div>
+
+
+                <div class="game-card memory-card">
+
+                    <div class="game-icon">🧠</div>
+
+                    <h3>Memory Match</h3>
+
+                    <p>
+                        Flip the cards and find all matching pairs
+                        using the fewest moves possible.
+                    </p>
+
+                    <div class="game-meta">
+                        <span>🧠 Memory</span>
+                        <span>🎯 1 Player</span>
+                    </div>
+
+                    <button onclick="showPage('memory')">
+                        PLAY GAME
+                    </button>
+
+                </div>
+
+
+                <div class="game-card snake-card">
+
+                    <div class="game-icon">🐍</div>
+
+                    <h3>Snake</h3>
+
+                    <p>
+                        Eat the food, grow longer and survive
+                        as long as possible.
+                    </p>
+
+                    <div class="game-meta">
+                        <span>🐍 Arcade</span>
+                        <span>🎯 1 Player</span>
+                    </div>
+
+                    <button onclick="showPage('snake')">
+                        PLAY GAME
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </section>
+
+
+
+    <!-- REACTION GAME -->
+
+    <section id="reaction" class="page game-page">
+
+        <button class="back-btn" onclick="showPage('home')">
+            ← Back to Arcade
+        </button>
+
+        <div class="game-container">
+
+            <p class="eyebrow">⚡ REFLEX CHALLENGE</p>
+
+            <h1>Reaction Rush</h1>
+
+            <p class="game-description">
+                Click the target as soon as it appears.
+            </p>
+
+            <div class="reaction-stats">
+
+                <div>
+                    <span>Best</span>
+                    <strong id="reaction-best">--</strong>
+                </div>
+
+                <div>
+                    <span>Last</span>
+                    <strong id="reaction-last">--</strong>
+                </div>
+
+            </div>
+
+            <div id="reaction-area" class="reaction-area">
+
+                <div id="reaction-message">
+                    Press START when you're ready.
+                </div>
+
+                <button
+                    id="reaction-target"
+                    class="reaction-target"
+                    onclick="reactionClicked()">
+                    CLICK!
+                </button>
+
+            </div>
+
+            <button
+                id="reaction-start"
+                class="primary-btn"
+                onclick="startReaction()">
+                START GAME
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- MEMORY GAME -->
+
+    <section id="memory" class="page game-page">
+
+        <button class="back-btn" onclick="showPage('home')">
+            ← Back to Arcade
+        </button>
+
+        <div class="game-container">
+
+            <p class="eyebrow">🧠 MEMORY CHALLENGE</p>
+
+            <h1>Memory Match</h1>
+
+            <p class="game-description">
+                Find all matching pairs.
+            </p>
+
+            <div class="memory-stats">
+
+                <div>
+                    <span>Moves</span>
+                    <strong id="memory-moves">0</strong>
+                </div>
+
+                <div>
+                    <span>Time</span>
+                    <strong id="memory-time">0s</strong>
+                </div>
+
+                <div>
+                    <span>Best</span>
+                    <strong id="memory-best">--</strong>
+                </div>
+
+            </div>
+
+
+            <div id="memory-board" class="memory-board"></div>
+
+            <button
+                class="primary-btn"
+                onclick="startMemory()">
+                NEW GAME
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- SNAKE GAME -->
+
+    <section id="snake" class="page game-page">
+
+        <button class="back-btn" onclick="showPage('home')">
+            ← Back to Arcade
+        </button>
+
+        <div class="game-container">
+
+            <p class="eyebrow">🐍 CLASSIC ARCADE</p>
+
+            <h1>Snake</h1>
+
+            <p class="game-description">
+                Use the arrow keys to control the snake.
+            </p>
+
+            <div class="snake-stats">
+
+                <div>
+                    <span>Score</span>
+                    <strong id="snake-score">0</strong>
+                </div>
+
+                <div>
+                    <span>Best</span>
+                    <strong id="snake-best">0</strong>
+                </div>
+
+            </div>
+
+            <canvas
+                id="snake-canvas"
+                width="400"
+                height="400">
+            </canvas>
+
+            <div id="snake-message">
+                Press START GAME
+            </div>
+
+            <button
+                class="primary-btn"
+                onclick="startSnake()">
+                START GAME
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        ☁️ Cloud Arcade
+        <span>•</span>
+        Running on AWS EKS
+        <span>•</span>
+        Kubernetes
+        <span>•</span>
+        Docker
+    </p>
+
+</footer>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
