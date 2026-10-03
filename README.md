@@ -1,16 +1,61 @@
-# Microservices Project
+# AWS EKS Microservices Deployment with Terraform, Helm & GitHub Actions
 
-## Description
-A simple microservices project.
+## 📌 Project Overview
 
-## Technologies Used
-- Node.js
-- Docker
-- Kubernetes
-- Git
+This project demonstrates the deployment of a containerized microservices application on **Amazon EKS (Elastic Kubernetes Service)** using Infrastructure as Code, Kubernetes, Helm, and CI/CD automation.
 
-## Setup
+The application consists of multiple Node.js microservices that are containerized with Docker, stored in Amazon ECR, deployed to an Amazon EKS cluster using Helm, and exposed externally through an AWS Application Load Balancer.
 
-```bash
-npm install
-npm start
+Infrastructure provisioning and Kubernetes deployment are automated using **Terraform and GitHub Actions**.
+
+---
+
+## 🏗️ Architecture
+
+```text
+                         ┌──────────────────────┐
+                         │       Developer      │
+                         │      Git Push        │
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │    GitHub Actions    │
+                         │       CI/CD          │
+                         └──────────┬───────────┘
+                                    │
+                    ┌───────────────┴───────────────┐
+                    │                               │
+                    ▼                               ▼
+          ┌─────────────────┐             ┌─────────────────┐
+          │   Docker Build  │             │    Terraform    │
+          └────────┬────────┘             │ Infrastructure  │
+                   │                      └────────┬────────┘
+                   ▼                               │
+          ┌─────────────────┐                      ▼
+          │   Amazon ECR    │             ┌─────────────────┐
+          │ Docker Images   │             │    Amazon EKS   │
+          └────────┬────────┘             │     Cluster     │
+                   │                      └────────┬────────┘
+                   │                               │
+                   └──────────────┬────────────────┘
+                                  ▼
+                       ┌─────────────────────┐
+                       │       Helm          │
+                       │ Kubernetes Deploy   │
+                       └──────────┬──────────┘
+                                  │
+              ┌───────────────────┼───────────────────┐
+              │                   │                   │
+              ▼                   ▼                   ▼
+       ┌────────────┐      ┌────────────┐      ┌────────────┐
+       │   User     │      │  Product   │      │   Order    │
+       │  Service   │      │  Service   │      │  Service   │
+       └────────────┘      └────────────┘      └────────────┘
+              │                   │                   │
+              └───────────────────┼───────────────────┘
+                                  ▼
+                       ┌─────────────────────┐
+                       │ AWS ALB Ingress     │
+                       │ External Access     │
+                       └─────────────────────┘
